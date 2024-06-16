@@ -1,0 +1,5 @@
+package com.te.rating.repository;
+
+public interface RatingRepository {
+
+}

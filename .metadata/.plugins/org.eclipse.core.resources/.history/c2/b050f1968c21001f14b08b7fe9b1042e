@@ -1,0 +1,5 @@
+package com.te.hotel.repository;
+
+public interface HotelRepository {
+
+}

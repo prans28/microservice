@@ -1,0 +1,5 @@
+package com.te.hotel.response;
+
+public class Response {
+
+}

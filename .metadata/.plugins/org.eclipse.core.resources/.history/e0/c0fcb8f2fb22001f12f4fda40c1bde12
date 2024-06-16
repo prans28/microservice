@@ -1,0 +1,9 @@
+package com.te.user.services.services.extra;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "")
+public interface HotelService {
+
+	
+}

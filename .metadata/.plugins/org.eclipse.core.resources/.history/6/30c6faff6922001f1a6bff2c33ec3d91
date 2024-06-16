@@ -1,0 +1,87 @@
+package com.te.user.services.services.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.te.user.services.dto.AppUserDto;
+import com.te.user.services.entity.AppUser;
+import com.te.user.services.exception.ResourceNotFoundException;
+import com.te.user.services.repository.UserRepository;
+import com.te.user.services.services.UserService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+
+	private final UserRepository userRepository;
+	
+	private final RestTemplate restTemplate;
+	
+	
+	private final Logger logger= LoggerFactory.getLogger(UserServiceImpl.class);
+
+//save user
+	@Override
+	public AppUserDto saveUser(AppUserDto userAppDto) {
+		AppUser appUser = new AppUser();
+		// setting random user id
+		String randomUserId = UUID.randomUUID().toString();
+		userAppDto.setUserId(randomUserId);
+		BeanUtils.copyProperties(userAppDto, appUser);
+		userRepository.save(appUser);
+		return userAppDto;
+	}
+
+//get all user
+	@Override
+	public List<AppUserDto> getAllUser() {
+		List<AppUser> users = userRepository.findAll();
+
+		List<AppUserDto> dtosList = new ArrayList<AppUserDto>();
+		if (users == null) {
+			throw new ResourceNotFoundException("user not available");
+		} else {
+			users.stream().forEach((user) -> {
+				AppUserDto appUserDto = new AppUserDto();
+				BeanUtils.copyProperties(user, appUserDto);
+				dtosList.add(appUserDto);
+				
+			});
+			
+		}
+		return dtosList;
+
+	}
+
+//get user by id	
+	@Override
+	public AppUserDto getUserById(String userId) {
+		AppUser appUser = userRepository.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("user not found" + userId));
+
+		AppUserDto userDto = new AppUserDto();
+		BeanUtils.copyProperties(appUser, userDto);
+		
+	//fetch rating of the user by userId
+	//http://localhost:8082/rating/user/18bbf21a-4eb5-4616-9149-8f4baedd17ca
+		
+ArrayList forObject = restTemplate.getForObject("http://localhost:8082/rating/user/18bbf21a-4eb5-4616-9149-8f4baedd17ca", ArrayList.class);
+				
+		
+		logger.info("{} ", forObject);
+
+		return userDto;
+	}
+
+}

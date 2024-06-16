@@ -1,0 +1,5 @@
+package com.te.user.services.services.extra;
+
+public interface HotelService {
+
+}

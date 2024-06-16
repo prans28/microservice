@@ -1,0 +1,48 @@
+package com.te.rating.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import com.te.rating.dto.RatingDto;
+import com.te.rating.entity.Rating;
+import com.te.rating.repository.RatingRepository;
+import com.te.rating.service.RatingService;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class RatingServiceImpl implements RatingService {
+
+	private final RatingRepository ratingRepository;
+
+	@Override
+	public RatingDto createRating(RatingDto ratingDto) {
+		Rating rating = new Rating();
+		BeanUtils.copyProperties(ratingDto, rating);
+		ratingRepository.save(rating);
+
+		return ratingDto;
+	}
+
+	@Override
+	public List<RatingDto> getAllRating() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RatingDto> getRatingsByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<RatingDto> getRatingsByHotelId(String hotelId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

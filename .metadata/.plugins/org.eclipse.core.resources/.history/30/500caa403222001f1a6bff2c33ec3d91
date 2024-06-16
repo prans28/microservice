@@ -1,0 +1,16 @@
+package com.te.rating.service;
+
+public interface RatingService {
+
+	
+	//create
+	
+	
+	
+	//get all ratings
+	
+	
+	//get all rating by user Id
+	
+	//get all by hotel
+}

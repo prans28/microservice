@@ -1,0 +1,30 @@
+package com.te.rating.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.te.rating.dto.RatingDto;
+import com.te.rating.response.Response;
+import com.te.rating.service.RatingService;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@RequestMapping("/rating")
+@RestController
+public class RatingController {
+
+	private final RatingService ratingService;
+
+	@PostMapping("/saveRating")
+	public ResponseEntity<Response> saveRating(@RequestBody RatingDto ratingDto) {
+
+		RatingDto rating = ratingService.createRating(ratingDto);
+		return new ResponseEntity<Response>(new Response(false, "rating saved successfully", rating),
+				HttpStatus.CREATED);
+	}
+}

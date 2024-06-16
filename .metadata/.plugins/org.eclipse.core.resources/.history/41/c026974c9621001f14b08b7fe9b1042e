@@ -1,0 +1,53 @@
+package com.te.hotel.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.stereotype.Service;
+
+import com.te.hotel.dto.HotelDto;
+import com.te.hotel.entity.Hotel;
+import com.te.hotel.repository.HotelRepository;
+import com.te.hotel.service.HotelService;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class HotelServiceImpl implements HotelService{
+
+	
+	private final HotelRepository hotelRepository;
+	
+	@Override
+	public HotelDto saveHotel(HotelDto hotelDto) {
+		Hotel hotel = new Hotel();
+		BeanUtils.copyProperties(hotelDto, hotel);
+		hotelRepository.save(hotel);
+		return hotelDto;
+	}
+
+	@Override
+	public List<HotelDto> getAllHotels() {
+		List<Hotel> hotels = hotelRepository.findAll();
+		
+		if(hotels==null) {
+			throw new 		}
+		return null;
+	}
+
+	@Override
+	public HotelDto getHotelById(String hotelId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

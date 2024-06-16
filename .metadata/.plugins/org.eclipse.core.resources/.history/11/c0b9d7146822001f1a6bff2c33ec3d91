@@ -1,0 +1,5 @@
+package com.te.user.services.configuration;
+
+public class MyConfiguration {
+
+}
